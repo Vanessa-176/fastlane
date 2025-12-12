@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="wrapper">
-    <h1>Login</h1>
+    <h1>Fastlane Login</h1>
     <p id="error-message"></p>
     <form id="form" action="php/auth-reg.php" method="POST">
       <div>
