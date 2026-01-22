@@ -9,7 +9,13 @@
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <platform name="android">
+<<<<<<< HEAD
         <preference name="android-targetSdkVersion" value="36" />
         <preference name="android-minSdkVersion" value="30" />
+=======
+        <preference name="android-compileSdkVersion" value="34" />
+        <preference name="android-targetSdkVersion" value="34" />
+        <preference name="android-minSdkVersion" value="24" /> 
+>>>>>>> eed35e68ae57b11da9753836fbe0062a51a0fbc1
     </platform>
 </widget>
