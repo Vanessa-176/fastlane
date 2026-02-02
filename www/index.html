@@ -12,19 +12,19 @@
 			<div class="signup">
 				<form>
 					<label for="chk" aria-hidden="true">Sign up</label>
-					<input type="text" name="txt" placeholder="User name" required="">
-					<input type="email" name="email" placeholder="Email" required="">
-          			<input type="number" name="broj" placeholder="Contact" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">
-					<button id="signup-btn">Sign up</button>
+					<input type="text" id="username" placeholder="User name" required="">
+					<input type="email" id="email" placeholder="Email" required="">
+          			<input type="number" id="contact" placeholder="Contact" required="">
+					<input type="password" id="password" placeholder="Password" required="">
+					<button id="signupBtn">Sign up</button>
 				</form>
 			</div>
 
 			<div class="login">
 				<form>
 					<label for="chk" aria-hidden="true">Login</label>
-					<input type="phone" name="phone" placeholder="Phone number" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">
+					<input type="phone" id="phone" placeholder="Phone number" required="">
+					<input type="password" id="password" placeholder="Password" required="">
 					<button id="loginBtn">Login</button>
 				</form>
 			</div>
@@ -32,4 +32,5 @@
 </body>
 <script src="js/index.js"></script>
 <script src="js/auth-reg.js"></script>
+<script src="cordova.js"></script>
 </html>
