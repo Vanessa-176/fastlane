@@ -40,12 +40,14 @@ function onDeviceReady() {
     db.transaction(function(tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS settings (id integer primary key, key text, value text, date_update text)');
         tx.executeSql('CREATE TABLE IF NOT EXISTS users (id integer primary key, username text, password text, role text, date_registered text)');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS user_profile (id integer primary key, user_id integer, email text, contact integer, address text, picture text, date_updated text, FOREIGN KEY(user_id) REFERENCES users(id))');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS crops (id integer primary key, user_id integer, crop_name text, crop_metadata text, date_updated text, FOREIGN KEY(user_id) REFERENCES users(id))');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS plots (id integer primary key, user_id integer, name text, area real, location text, soil_type text, date_created text, date_updated text, FOREIGN KEY(user_id) REFERENCES users(id), FOREIGN KEY(crop_id) REFERENCES crops(id))');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS crop_requirements (id integer primary key, user_id, crop_id integer, season text, temp_range text, rainfall integer, soil text, pH integer, date_updated text, FOREIGN KEY(user_id) REFERENCES users(id), FOREIGN KEY(crop_id) REFERENCES crops(id))');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS recommendations (id integer primary key, user_id integer, crop_id integer, recommendation text, date_updated text, FOREIGN KEY(user_id) REFERENCES users(id), FOREIGN KEY(crop_id) REFERENCES crops(id))');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS weather_cache (id integer primary key, user_id integer, location text, temperature integer, measuring text, appearance text, wind_speed integer, humidity integer, date_updated text, FOREIGN KEY(user_id) REFERENCES users(id))')
+        tx.executeSql('CREATE TABLE IF NOT EXISTS customers (id integer primary key, fullname text, contact integer, age integer, date_updated text, FOREIGN KEY(user_id) REFERENCES users(id))');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS schedule(id integer primary key, route_id integer,s(id))');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS payment(id integer primary key, booking_id integer, amount integer, method text,  date_ text, FOREIGN KEY(user_id))');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS route (id integer primary key, bus_id, schedule_id integer )');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS seat(id integer primary key, seat_id integer, seat_number integer, ))');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS booking (id integer primary key, booking_id integer, customer_id integer, route_id integer, seat_id integer, schedule_id integer, date text)')
+        tx.executeSql('CREATE TABLE IF NOT EXISTS drivers(id integer primary key, drivers_id integer, fullname text,contact text, age integer, date text)')
+        
     }, function(error) {
         console.error('Initialization Error: ' + error.message);
         alert("Initialization Error! : " + error.message);
