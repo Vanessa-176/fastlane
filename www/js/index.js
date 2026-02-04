@@ -47,7 +47,7 @@ function onDeviceReady() {
         tx.executeSql('CREATE TABLE IF NOT EXISTS seat(id integer primary key, seat_id integer, seat_number integer)');
         tx.executeSql('CREATE TABLE IF NOT EXISTS booking (id integer primary key, booking_id integer, customer_id integer, route_id integer, seat_id integer, schedule_id integer, date text)')
         tx.executeSql('CREATE TABLE IF NOT EXISTS drivers(id integer primary key, drivers_id integer, fullname text,contact text, age integer, date text)')
-        tx.executeSql('CREATE TABLE IF NOT EXISTS bus(id integer primary key, bus_id integer, driver_id integer,schedule_id integer, route_idinteger)')
+        tx.executeSql('CREATE TABLE IF NOT EXISTS bus(id integer primary key, bus_id integer, driver_id integer,schedule_id integer, route_id integer)')
     }, function(error) {
         console.error('Initialization Error: ' + error.message);
         alert("Initialization Error! : " + error.message);
