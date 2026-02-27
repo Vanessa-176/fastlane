@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS schedule(
 CREATE TABLE IF NOT EXISTS bus(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     schedule_id INTEGER, 
+    seat_limit INTEGER,
     date_recorded DATETIME NOT NULL,
     date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (schedule_id) REFERENCES schedule(id)
