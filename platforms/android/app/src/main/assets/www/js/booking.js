@@ -1,16 +1,12 @@
-/*
-     * Because index.js already opens the database and declares `db` as a global,
-     * we just need to wait for deviceready and wire up the form handler here.
-     */
 document.addEventListener('deviceready', function () {
-    document.getElementById('bookingBtn').addEventListener('click', function(e) {
-        saveBooking();
-    });
+    if (document.getElementById('bookingBtn')) {
+        document.getElementById('bookingBtn').addEventListener('click', function(e) {
+            alert('button works!')
+        });
+    }
 });
 
 function saveBooking() {
-    // e.preventDefault();
-
     var fullname = document.getElementById('fullname').value.trim();
     var contact = document.getElementById('contact').value.trim();
     var age_range = document.getElementById('age_range').value.trim();
@@ -21,33 +17,34 @@ function saveBooking() {
     var seat_id = seat_id_val === '' ? null : parseInt(seat_id_val, 10);
     var amount = parseFloat(document.getElementById('amount').value);
     var method = document.getElementById('method').value;
+    var date = new Date().toISOString();
 
     db.transaction(function (tx) {
     // 1. create customer
     tx.executeSql(
-        'INSERT INTO customers (fullname, contact, age_range, date_recorded) VALUES (?,?,?,datetime("now"))',
-        [fullname, contact, age_range],
+        'INSERT INTO customers (fullname, contact, age_range, date_recorded) VALUES (?,?,?,?)',
+        [fullname, contact, age_range, date],
         function (tx, res) {
         var customerId = res.insertId;
 
         // 2. create schedule
         tx.executeSql(
-            'INSERT INTO schedule (route_id, departure_time, arrival_time, date_recorded) VALUES (?,?,?,datetime("now"))',
-            [route_id, departure_time, arrival_time],
+            'INSERT INTO schedule (route_id, departure_time, arrival_time, date_recorded) VALUES (?,?,?,?)',
+            [route_id, departure_time, arrival_time, date],
             function (tx, res2) {
             var scheduleId = res2.insertId;
 
             // 3. create booking
             tx.executeSql(
-                'INSERT INTO booking (customer_id, route_id, seat_id, schedule_id, date) VALUES (?,?,?,?,datetime("now"))',
-                [customerId, route_id, seat_id, scheduleId],
+                'INSERT INTO booking (customer_id, route_id, seat_id, schedule_id, date) VALUES (?,?,?,?,?)',
+                [customerId, route_id, seat_id, scheduleId, date],
                 function (tx, res3) {
                 var bookingId = res3.insertId;
 
                 // 4. create payment
                 tx.executeSql(
-                    'INSERT INTO payment (booking_id, amount, method, date_recorded) VALUES (?,?,?,datetime("now"))',
-                    [bookingId, amount, method],
+                    'INSERT INTO payment (booking_id, amount, method, date_recorded) VALUES (?,?,?,?)',
+                    [bookingId, amount, method, date],
                     function (tx, res4) {
                     alert('Booking complete! Reference #' + bookingId);
                     document.getElementById('bookingForm').reset();

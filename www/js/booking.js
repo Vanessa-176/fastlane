@@ -1,16 +1,12 @@
-/*
-     * Because index.js already opens the database and declares `db` as a global,
-     * we just need to wait for deviceready and wire up the form handler here.
-     */
 document.addEventListener('deviceready', function () {
-    document.getElementById('bookingBtn').addEventListener('click', function(e) {
-        saveBooking();
-    });
+    if (document.getElementById('bookingBtn')) {
+        document.getElementById('bookingBtn').addEventListener('click', function(e) {
+            alert('button works!')
+        });
+    }
 });
 
 function saveBooking() {
-    // e.preventDefault();
-
     var fullname = document.getElementById('fullname').value.trim();
     var contact = document.getElementById('contact').value.trim();
     var age_range = document.getElementById('age_range').value.trim();
