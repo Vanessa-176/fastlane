@@ -56,3 +56,65 @@ function onDeviceReady() {
         alert("Database and Tables Ready!");
     });
 }
+
+/**
+ * Utility functions used by booking form pages.  These functions assume
+ * the global `db` variable has already been opened in onDeviceReady.
+ */
+
+function sqlErrorHandler(tx, error) {
+    console.error('SQL error: ' + error.message);
+    alert('SQL error: ' + error.message);
+}
+
+/**
+ * Create a new customer/booking/schedule/payment sequence.
+ *
+ * The form code implemented in booking.html uses this helper for clarity,
+ * but you can also call it directly from other controllers if needed.
+ */
+function createFullBooking(data, successCallback, errorCallback) {
+    // data should contain: fullname, contact, age_range,
+    // route_id, departure_time, arrival_time, seat_id (nullable),
+    // amount, method
+    db.transaction(function(tx) {
+        tx.executeSql(
+            'INSERT INTO customers (fullname, contact, age_range, date_recorded) VALUES (?,?,?,datetime("now"))',
+            [data.fullname, data.contact, data.age_range],
+            function(tx, res) {
+                var customerId = res.insertId;
+                tx.executeSql(
+                    'INSERT INTO schedule (route_id, departure_time, arrival_time, date_recorded) VALUES (?,?,?,datetime("now"))',
+                    [data.route_id, data.departure_time, data.arrival_time],
+                    function(tx, res2) {
+                        var scheduleId = res2.insertId;
+                        tx.executeSql(
+                            'INSERT INTO booking (customer_id, route_id, seat_id, schedule_id, date) VALUES (?,?,?,?,datetime("now"))',
+                            [customerId, data.route_id, data.seat_id, scheduleId],
+                            function(tx, res3) {
+                                var bookingId = res3.insertId;
+                                tx.executeSql(
+                                    'INSERT INTO payment (booking_id, amount, method, date_recorded) VALUES (?,?,?,datetime("now"))',
+                                    [bookingId, data.amount, data.method],
+                                    function(tx, res4) {
+                                        if (successCallback) successCallback(bookingId);
+                                    },
+                                    errorCallback || sqlErrorHandler
+                                );
+                            },
+                            errorCallback || sqlErrorHandler
+                        );
+                    },
+                    errorCallback || sqlErrorHandler
+                );
+            },
+            errorCallback || sqlErrorHandler
+        );
+    }, function(err) {
+        console.error('createFullBooking transaction error', err);
+        if (errorCallback) errorCallback(err);
+    }, function() {
+        console.log('createFullBooking transaction complete');
+    });
+}
+

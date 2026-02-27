@@ -1,37 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Slide Navbar</title>
-	<link rel="stylesheet" type="text/css" href="css/auth-reg.css">
-	<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+	<title>Fastlane - Home</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- <link rel="stylesheet" href="css/style.css"> -->
+  <link rel="stylesheet" href="css/bootstrap.css">
 </head>
 <body>
-	<div class="main">  	
-		<input type="checkbox" id="chk" aria-hidden="true">
-
-			<div class="signup">
-				<form>
-					<label for="chk" aria-hidden="true">Sign up</label>
-					<input type="text" id="username" placeholder="User name" required="">
-					<input type="email" id="email" placeholder="Email" required="">
-          			<input type="number" id="contact" placeholder="Contact" required="">
-					<input type="password" id="password" placeholder="Password" required="">
-					<button id="signupBtn">Sign up</button>
-				</form>
-			</div>
-
-			<div class="login">
-				<form>
-					<label for="chk" aria-hidden="true">Login</label>
-					<input type="phone" id="phone" placeholder="Phone number" required="">
-					<input type="password" id="password" placeholder="Password" required="">
-					<button id="loginBtn">Login</button>
-				</form>
-			</div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Fastlane</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login_signin.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="booking.html">Make Booking</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Content -->
+  <div class="card p-3">
+    <img src="img/background.jpg" alt="person using a smartphone in a car" class="card-img img-fluid rounded">
+    <p class="card-img-overlay h1 m-3 text-white">Booking</p>
+  </div>
+  <section class="container-fluid">
+	<div>
+		<h1>Welcome</h1>
+		<p>Fastlane is a quick and safe commute service that handles all you needs and wants till
+			you reach your destination.
+		</p>
+		<a href="booking.html" class="btn btn-primary">Book now!</a>
 	</div>
+
+  </section>
+
+<!-- Footer -->
+
+
 </body>
-<script src="jquery/jquery-3.6.0.min.js"></script>
-<script src="js/index.js"></script>
-<script src="js/auth-reg.js"></script>
 <script src="cordova.js"></script>
+<script src="js/bootstrap.js"></script>
 </html>
