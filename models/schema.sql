@@ -1,12 +1,5 @@
-CREATE TABLE IF NOT EXISTS settings (
-    id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT, 
-    key TEXT, 
-    value TEXT, 
-    date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT, 
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
     username TEXT, 
     password TEXT, 
     role TEXT, 
@@ -15,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS customers (
-    id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT, 
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
     fullname TEXT, 
     contact INTEGER, 
     age_range TEXT, 
@@ -24,58 +17,39 @@ CREATE TABLE IF NOT EXISTS customers (
 );
 
 CREATE TABLE IF NOT EXISTS schedule(
-    id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT, 
-    route_id INTEGER, 
-    departure_time TEXT, 
-    arrival_time DATETIME, 
-    date_recorded DATETIME NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS payment(
-    id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT, 
-    booking_id INTEGER, 
-    amount INTEGER, 
-    method TEXT,  
-    date_recorded DATETIME NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS route (
-    id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT, 
-    bus_id INTEGER, 
-    schedule_id INTEGER,
-    date_recorded DATETIME NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS seat(
-    id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT, 
-    seat_id INTEGER, 
-    seat_number INTEGER
-);
-
-CREATE TABLE IF NOT EXISTS booking (
-    id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT, 
-    booking_id INTEGER, 
-    customer_id INTEGER, 
-    route_id INTEGER, 
-    seat_id INTEGER, 
-    schedule_id INTEGER, 
-    date_recorded DATETIME NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS drivers(
-    id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT, 
-    drivers_id INTEGER, 
-    fullname TEXT, 
-    contact TEXT, 
-    age INTEGER, 
-    date_recorded DATETIME NOT NULL
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    route TEXT, 
+    departure_time DATETIME, 
+    date_recorded DATETIME NOT NULL,
+    date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS bus(
-    id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
-    bus_id INTEGER, 
-    driver_id INTEGER,
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     schedule_id INTEGER, 
-    route_id INTEGER,
-    date_recorded DATETIME NOT NULL
+    date_recorded DATETIME NOT NULL,
+    date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (schedule_id) REFERENCES schedule(id)
 );
+
+CREATE TABLE IF NOT EXISTS booking (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,  
+    customer_id INTEGER,  
+    schedule_id INTEGER,
+    seat_Number INTEGER, 
+    date_recorded DATETIME NOT NULL,
+    date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (schedule_id) REFERENCES schedule(id)
+);
+
+CREATE TABLE IF NOT EXISTS payment(
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    booking_id INTEGER, 
+    amount INTEGER, 
+    method TEXT,  
+    date_recorded DATETIME NOT NULL,
+    date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (booking_id) REFERENCES booking(id)
+);
+
