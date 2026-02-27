@@ -24,6 +24,7 @@ function onDeviceReady() {
         tx.executeSql('CREATE TABLE IF NOT EXISTS schedule(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, route TEXT, departure_time DATETIME, date_recorded DATETIME NOT NULL, date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP');
         tx.executeSql('CREATE TABLE IF NOT EXISTS bus(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, schedule_id INTEGER, seat_limit INTEGER, date_recorded DATETIME NOT NULL, date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (schedule_id) REFERENCES schedule(id)');
         tx.executeSql('CREATE TABLE IF NOT EXISTS booking (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, customer_id INTEGER, schedule_id INTEGER, seat_Number INTEGER, date_recorded DATETIME NOT NULL, date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (customer_id) REFERENCES customers(id), FOREIGN KEY (schedule_id) REFERENCES schedule(id)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS seat (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, seat_number INTEGER NOT NULL, is_booked TEXT NOT NULL, date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP');
         tx.executeSql('CREATE TABLE IF NOT EXISTS payment(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, booking_id INTEGER, amount INTEGER, method TEXT,  date_recorded DATETIME NOT NULL, date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (booking_id) REFERENCES booking(id)');
     }, function(error) {
         alert("Initialization Error! : " + error.message);
