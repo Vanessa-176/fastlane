@@ -33,23 +33,24 @@ CREATE TABLE IF NOT EXISTS bus(
     FOREIGN KEY (schedule_id) REFERENCES schedule(id)
 );
 
-CREATE TABLE IF NOT EXISTS booking (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,  
-    customer_id INTEGER,  
-    schedule_id INTEGER,
-    seat_Number INTEGER, 
-    date_recorded DATETIME NOT NULL,
-    date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES customers(id),
-    FOREIGN KEY (schedule_id) REFERENCES schedule(id)
-);
-
 CREATE TABLE IF NOT EXISTS seat (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     seat_number INTEGER NOT NULL,
     is_booked TEXT NOT NULL,
     date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
+
+CREATE TABLE IF NOT EXISTS booking (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,  
+    customer_id INTEGER,  
+    schedule_id INTEGER,
+    seat_id INTEGER, 
+    date_recorded DATETIME NOT NULL,
+    date_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (schedule_id) REFERENCES schedule(id),
+    FOREIGN KEY (seat_id) REFERENCES seat(id)
+);
 
 CREATE TABLE IF NOT EXISTS payment(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
